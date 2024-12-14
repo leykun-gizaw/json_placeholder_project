@@ -4,7 +4,6 @@ import {
   Burger,
   Center,
   Flex,
-  Table,
   Title,
   useMantineColorScheme,
 } from "@mantine/core";
@@ -15,6 +14,7 @@ import { useState } from "react";
 import NavRoutes from "./Navigation/NavRoutes.tsx";
 import useFetchData from "../hooks/useFetchData.ts";
 import { Route } from "../definitions.ts";
+import MainView from "./Main/MainView.tsx";
 
 function ApplicationShell() {
   const [opened, { toggle }] = useDisclosure();
@@ -80,7 +80,7 @@ function ApplicationShell() {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Table />
+        <MainView route={routes[activeRouteIndex]} />
       </AppShell.Main>
     </AppShell>
   );
