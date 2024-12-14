@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "local-server": "json-server --watch ./local-json-server/db.json"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
@@ -20,6 +21,7 @@
     "@mantine/form": "^7.15.0",
     "@mantine/hooks": "^7.15.0",
     "dayjs": "^1.11.13",
+    "json-server": "^1.0.0-beta.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
