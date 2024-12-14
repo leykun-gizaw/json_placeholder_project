@@ -3,12 +3,40 @@ import React from "react";
 import { Button, Divider, Flex, Title } from "@mantine/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import PostsComponent from "./PostsComponent.tsx";
+import AlbumsComponent from "./AlbumsComponent.tsx";
+import PhotosComponent from "./PhotosComponent.tsx";
+import CommentsComponent from "./CommentsComponent.tsx";
+import UsersComponent from "./UsersComponent.tsx";
+import TodosComponent from "./TodosComponent.tsx";
 
 interface MainViewProps {
   route: Route;
 }
 
 const MainView: React.FC<MainViewProps> = (props) => {
+  let chosenComponent = <></>;
+
+  switch (props.route?.name) {
+    case "posts":
+      chosenComponent = <PostsComponent route={props.route} />;
+      break;
+    case "comments":
+      chosenComponent = <CommentsComponent route={props.route} />;
+      break;
+    case "users":
+      chosenComponent = <UsersComponent route={props.route} />;
+      break;
+    case "todos":
+      chosenComponent = <TodosComponent route={props.route} />;
+      break;
+    case "albums":
+      chosenComponent = <AlbumsComponent route={props.route} />;
+      break;
+    case "photos":
+      chosenComponent = <PhotosComponent route={props.route} />;
+      break;
+  }
   return (
     <>
       <Flex align={"center"} justify={"space-between"}>
@@ -21,6 +49,7 @@ const MainView: React.FC<MainViewProps> = (props) => {
         </Button>
       </Flex>
       <Divider my={"sm"} />
+      {chosenComponent}
     </>
   );
 };
