@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "local-server": "json-server --watch ./local-json-server/db.json"
+    "local-server": "json-server --watch dummy-json/db.json"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
