@@ -4,6 +4,7 @@ import {
   Burger,
   Center,
   Flex,
+  Table,
   Title,
   useMantineColorScheme,
 } from "@mantine/core";
@@ -12,11 +13,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import NavRoutes from "./Navigation/NavRoutes.tsx";
+import useFetchData from "../hooks/useFetchData.ts";
+import { Route } from "../definitions.ts";
 
 function ApplicationShell() {
   const [opened, { toggle }] = useDisclosure();
   const { colorScheme, setColorScheme } = useMantineColorScheme();
-  const [activeLinkIndex, setActiveLinkIndex] = useState(0);
+  const [activeRouteIndex, setActiveRouteIndex] = useState(0);
+
+  const { data: routes } = useFetchData<Route[]>(
+    "http://localhost:3000/available-routes",
+  );
 
   const handleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
@@ -65,10 +72,16 @@ function ApplicationShell() {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <NavRoutes />
+        <NavRoutes
+          routes={routes}
+          activeRouteIndex={activeRouteIndex}
+          setActiveRouteIndex={setActiveRouteIndex}
+        />
       </AppShell.Navbar>
 
-      <AppShell.Main></AppShell.Main>
+      <AppShell.Main>
+        <Table />
+      </AppShell.Main>
     </AppShell>
   );
 }
