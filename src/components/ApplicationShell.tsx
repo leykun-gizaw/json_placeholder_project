@@ -17,7 +17,8 @@ import { Route } from "../definitions.ts";
 import MainView from "./Main/MainView.tsx";
 
 function ApplicationShell() {
-  const [opened, { toggle }] = useDisclosure();
+  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   const [activeRouteIndex, setActiveRouteIndex] = useState(0);
 
@@ -33,9 +34,9 @@ function ApplicationShell() {
     <AppShell
       header={{ height: 50 }}
       navbar={{
-        width: 400,
+        width: 300,
         breakpoint: "sm",
-        collapsed: { mobile: !opened },
+        collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       padding="md"
     >
@@ -45,9 +46,15 @@ function ApplicationShell() {
             <Center>
               <Flex align={"center"} gap="md">
                 <Burger
-                  opened={opened}
-                  onClick={toggle}
+                  opened={mobileOpened}
+                  onClick={toggleMobile}
                   hiddenFrom="sm"
+                  size="sm"
+                />
+                <Burger
+                  opened={desktopOpened}
+                  onClick={toggleDesktop}
+                  visibleFrom="sm"
                   size="sm"
                 />
                 <Title order={2} fw={500}>{`{JSON} Placeholder`}</Title>
