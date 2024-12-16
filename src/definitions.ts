@@ -13,6 +13,27 @@ export interface Comment {
   body: string;
 }
 
+export interface Todo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+export interface Album {
+  userId: number;
+  id: number;
+  title: string;
+}
+
+export interface Photo {
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+}
+
 interface CustomLocation {
   lat: string;
   lng: string;

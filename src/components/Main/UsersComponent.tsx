@@ -1,6 +1,5 @@
-import { Route, UserType } from "../../definitions.ts";
+import { UserType } from "../../definitions.ts";
 import React, { useState } from "react";
-import useFetchData from "../../hooks/useFetchData.ts";
 import { Button, Drawer, ScrollArea, Table } from "@mantine/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
@@ -8,12 +7,12 @@ import { useDisclosure } from "@mantine/hooks";
 import UserDetails from "./UserDetails.tsx";
 
 interface UsersComponentProps {
-  route: Route;
+  users: UserType[];
 }
 const UsersComponent: React.FC<UsersComponentProps> = (props) => {
+  const users = props.users;
   const [drawerOpened, { open, close }] = useDisclosure(false);
   const [drawerDetails, setDrawerDetails] = useState<UserType>({} as UserType);
-  const { data: users } = useFetchData<UserType[]>(props.route.href);
 
   const handleDrawerOpen = (usr: UserType) => {
     setDrawerDetails(usr);

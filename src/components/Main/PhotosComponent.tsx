@@ -1,10 +1,11 @@
-import { Route } from "../../definitions.ts";
+import { Photo } from "../../definitions.ts";
 import React from "react";
 
 interface PhotosComponentProps {
-  route: Route;
+  photos: Photo[];
 }
 const PhotosComponent: React.FC<PhotosComponentProps> = (props) => {
+  console.log(props.photos);
   return <></>;
 };
 

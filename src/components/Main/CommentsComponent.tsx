@@ -1,10 +1,11 @@
-import { Route } from "../../definitions.ts";
+import { Comment } from "../../definitions.ts";
 import React from "react";
 
 interface CommentsComponentProps {
-  route: Route;
+  comments: Comment[];
 }
 const CommentsComponent: React.FC<CommentsComponentProps> = (props) => {
+  console.log(props.comments);
   return <></>;
 };
 

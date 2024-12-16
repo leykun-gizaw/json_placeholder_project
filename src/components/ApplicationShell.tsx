@@ -3,7 +3,9 @@ import {
   AppShell,
   Burger,
   Center,
+  Divider,
   Flex,
+  Pagination,
   Title,
   useMantineColorScheme,
 } from "@mantine/core";
@@ -13,8 +15,24 @@ import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import NavRoutes from "./Navigation/NavRoutes.tsx";
 import useFetchData from "../hooks/useFetchData.ts";
-import { Route } from "../definitions.ts";
+import {
+  Album,
+  Comment,
+  Photo,
+  Post,
+  Route,
+  Todo,
+  UserType,
+} from "../definitions.ts";
 import MainView from "./Main/MainView.tsx";
+
+type MainViewDataType =
+  | Array<UserType>
+  | Array<Post>
+  | Array<Comment>
+  | Array<Album>
+  | Array<Photo>
+  | Array<Todo>;
 
 function ApplicationShell() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -24,6 +42,9 @@ function ApplicationShell() {
 
   const { data: routes } = useFetchData<Route[]>(
     "http://localhost:3000/available-routes",
+  );
+  const { data: mainViewData } = useFetchData<MainViewDataType>(
+    routes[activeRouteIndex]?.href,
   );
 
   const handleColorScheme = () => {
@@ -39,10 +60,12 @@ function ApplicationShell() {
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       padding="md"
+      footer={{ height: 50 }}
+      layout={"alt"}
     >
       <AppShell.Header>
         <Center h={"100%"}>
-          <Flex justify={"space-between"} w={"95%"} gap="md">
+          <Flex justify={"space-between"} w={"100%"} gap="md" mx={"md"}>
             <Center>
               <Flex align={"center"} gap="md">
                 <Burger
@@ -79,6 +102,8 @@ function ApplicationShell() {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
+        <Title order={3}>Available Routes</Title>
+        <Divider my={"sm"} />
         <NavRoutes
           routes={routes}
           activeRouteIndex={activeRouteIndex}
@@ -87,8 +112,13 @@ function ApplicationShell() {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <MainView route={routes[activeRouteIndex]} />
+        <MainView route={routes[activeRouteIndex]} data={mainViewData} />
       </AppShell.Main>
+      <AppShell.Footer py={"md"}>
+        <Center h={"100%"}>
+          <Pagination total={mainViewData.length / 20} />
+        </Center>
+      </AppShell.Footer>
     </AppShell>
   );
 }
