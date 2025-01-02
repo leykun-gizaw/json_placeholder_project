@@ -1,11 +1,14 @@
 import { Album } from "../../definitions.ts";
-import React from "react";
+import React, { useContext } from "react";
+import { RoutesContext } from "../../contexts/RoutesContext.ts";
+import useFetchData from "../../hooks/useFetchData.ts";
 
-interface AlbumsComponentProps {
-  albums: Album[];
-}
-const AlbumsComponent: React.FC<AlbumsComponentProps> = (props) => {
-  console.log(props.albums);
+const AlbumsComponent: React.FC = () => {
+  const albumsRoute = useContext(RoutesContext).find(
+    (route) => route.name === "albums",
+  );
+  const albums = useFetchData<Album[]>(albumsRoute?.href as string);
+  console.log(albums);
   return <></>;
 };
 

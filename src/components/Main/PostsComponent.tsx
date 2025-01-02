@@ -1,11 +1,14 @@
 import { Post } from "../../definitions.ts";
-import React from "react";
+import React, { useContext } from "react";
+import { RoutesContext } from "../../contexts/RoutesContext.ts";
+import useFetchData from "../../hooks/useFetchData.ts";
 
-interface PostsCommentProps {
-  posts: Post[];
-}
-const PostsComponent: React.FC<PostsCommentProps> = (props) => {
-  console.log(props.posts);
+const PostsComponent: React.FC = () => {
+  const postsRoute = useContext(RoutesContext).find(
+    (route) => route.name === "posts",
+  );
+  const posts = useFetchData<Post[]>(postsRoute?.href as string);
+  console.log(posts);
   return <></>;
 };
 

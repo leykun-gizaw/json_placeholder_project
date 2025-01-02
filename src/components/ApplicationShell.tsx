@@ -12,40 +12,17 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import NavRoutes from "./Navigation/NavRoutes.tsx";
-import useFetchData from "../hooks/useFetchData.ts";
-import {
-  Album,
-  Comment,
-  Photo,
-  Post,
-  Route,
-  Todo,
-  UserType,
-} from "../definitions.ts";
 import MainView from "./Main/MainView.tsx";
+import { RoutesContext } from "../contexts/RoutesContext.ts";
 
-type MainViewDataType =
-  | Array<UserType>
-  | Array<Post>
-  | Array<Comment>
-  | Array<Album>
-  | Array<Photo>
-  | Array<Todo>;
-
-function ApplicationShell() {
+const ApplicationShell: React.FC = () => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   const [activeRouteIndex, setActiveRouteIndex] = useState(0);
-
-  const { data: routes } = useFetchData<Route[]>(
-    "http://localhost:3000/available-routes",
-  );
-  const { data: mainViewData } = useFetchData<MainViewDataType>(
-    routes[activeRouteIndex]?.href,
-  );
+  const routes = useContext(RoutesContext);
 
   const handleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
@@ -112,15 +89,15 @@ function ApplicationShell() {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <MainView route={routes[activeRouteIndex]} data={mainViewData} />
+        <MainView route={routes[activeRouteIndex]} />
       </AppShell.Main>
       <AppShell.Footer py={"md"}>
         <Center h={"100%"}>
-          <Pagination total={mainViewData.length / 20} />
+          <Pagination total={5} />
         </Center>
       </AppShell.Footer>
     </AppShell>
   );
-}
+};
 
 export default ApplicationShell;

@@ -1,12 +1,4 @@
-import {
-  Album,
-  Comment,
-  Photo,
-  Post,
-  Route,
-  Todo,
-  UserType,
-} from "../../definitions.ts";
+import { Route } from "../../definitions.ts";
 import React from "react";
 import { Button, Divider, Flex, Title } from "@mantine/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,13 +12,6 @@ import TodosComponent from "./TodosComponent.tsx";
 
 interface MainViewProps {
   route: Route;
-  data:
-    | Array<UserType>
-    | Array<Post>
-    | Array<Comment>
-    | Array<Album>
-    | Array<Photo>
-    | Array<Todo>;
 }
 
 const MainView: React.FC<MainViewProps> = (props) => {
@@ -34,24 +19,22 @@ const MainView: React.FC<MainViewProps> = (props) => {
 
   switch (props.route?.name) {
     case "posts":
-      chosenComponent = <PostsComponent posts={props.data as Post[]} />;
+      chosenComponent = <PostsComponent />;
       break;
     case "comments":
-      chosenComponent = (
-        <CommentsComponent comments={props.data as Comment[]} />
-      );
+      chosenComponent = <CommentsComponent />;
       break;
     case "users":
-      chosenComponent = <UsersComponent users={props.data as UserType[]} />;
+      chosenComponent = <UsersComponent />;
       break;
     case "todos":
-      chosenComponent = <TodosComponent todos={props.data as Todo[]} />;
+      chosenComponent = <TodosComponent />;
       break;
     case "albums":
-      chosenComponent = <AlbumsComponent albums={props.data as Album[]} />;
+      chosenComponent = <AlbumsComponent />;
       break;
     case "photos":
-      chosenComponent = <PhotosComponent photos={props.data as Photo[]} />;
+      chosenComponent = <PhotosComponent />;
       break;
   }
   return (

@@ -1,11 +1,14 @@
 import { Todo } from "../../definitions.ts";
-import React from "react";
+import React, { useContext } from "react";
+import { RoutesContext } from "../../contexts/RoutesContext.ts";
+import useFetchData from "../../hooks/useFetchData.ts";
 
-interface TodosComponentProps {
-  todos: Todo[];
-}
-const TodosComponent: React.FC<TodosComponentProps> = (props) => {
-  console.log(props.todos);
+const TodosComponent: React.FC = () => {
+  const todosRoute = useContext(RoutesContext).find(
+    (route) => route.name === "todos",
+  );
+  const todos = useFetchData<Todo[]>(todosRoute?.href as string);
+  console.log(todos);
   return <></>;
 };
 
